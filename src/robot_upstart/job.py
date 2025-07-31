@@ -41,7 +41,7 @@ class Job(object):
 
     def __init__(self, name="ros", interface=None, user=None, workspace_setup=None,
                  rosdistro=None, master_uri=None, log_path=None,
-                 systemd_after=None):
+                 systemd_after=None, environment_vars=None):
         """Construct a new Job definition.
 
         :param name: Name of job to create. Defaults to "ros", but you might
@@ -110,6 +110,10 @@ class Job(object):
         # startup job itself. List of strs.
         self.files = []
 
+        # Set of environment variables to export in the start up script.
+        # This allows launch files to have dependency on environment variables.
+        self.environment_vars = environment_vars or []
+        
     def add(self, package=None, filename=None, glob=None):
         """ Add launch or other configuration files to Job.
 

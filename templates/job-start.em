@@ -104,6 +104,8 @@ if [ "$?" != "0" ]; then
 fi
 
 # Punch it.
+@# Generate user specified environment variables if exists
+@[for elem in environment_vars]@[if elem]export @(elem)@\n@[end if]@[end for]
 setpriv --reuid @(user) --regid @(user) --init-groups roslaunch $LAUNCH_FILENAME @(roslaunch_wait?'--wait ')&
 PID=$!
 
